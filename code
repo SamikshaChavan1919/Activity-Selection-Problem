@@ -1,0 +1,22 @@
+agents = {
+    "Alice": [("Hike", 3), ("Hike", 4), ("Hike", 5), ("Hike", 6), ("Bus", 10), ("Bus", 11)],
+    "Bob": [("Bus", 8), ("Bus", 9), ("Bus", 10), ("Ping Pong", 2), ("Ping Pong", 3)],
+    "Carol": [("Ping Pong", 2), ("Ping Pong", 3), ("Ping Pong", 4), ("Hike", 3), ("Hike", 4), ("Hike", 5)],
+}
+
+# Define available activities
+activities = ["Hike", "Bus", "Ping Pong"]
+
+# Brute-force all groupings and check stability
+from itertools import combinations
+
+def is_valid_assignment(group, activity):
+    group_size = len(group)
+    return all((activity, group_size) in agents[person] for person in group)
+
+# Try assigning people to activities and print valid groupings
+for activity in activities:
+    for r in range(1, len(agents)+1):
+        for group in combinations(agents.keys(), r):
+            if is_valid_assignment(group, activity):
+                print(f"Valid group for {activity}: {group}")
